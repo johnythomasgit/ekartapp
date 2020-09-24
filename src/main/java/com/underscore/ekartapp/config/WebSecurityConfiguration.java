@@ -63,7 +63,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anonymous().and()
                 .authorizeRequests()
                 .antMatchers(POST, "/users").anonymous()
-                .antMatchers(GET, "/users/downloadFile/**").anonymous()
+                .antMatchers(GET, "/media/downloadFile/**").anonymous()
                 .antMatchers("/login/**").anonymous()
                 .anyRequest().authenticated();
     }

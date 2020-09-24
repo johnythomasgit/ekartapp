@@ -5,6 +5,7 @@
  */
 package com.underscore.ekartapp.entity;
 
+import com.underscore.ekartapp.form.CategoryForm;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -28,6 +29,19 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")})
 public class Category implements Serializable {
 
+
+    public static enum Status {
+        INACTIVE((short) 0),
+        ACTIVE((short) 1),
+        DELETED((short) 2);
+
+        public final short value;
+
+        private Status(short value) {
+            this.value = value;
+        }
+    }
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +57,15 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "categoryId", fetch = FetchType.LAZY)
     private List<Item> itemList;
 
+    public Category(CategoryForm form) {
+        this.name = form.getName();
+        this.status = Category.Status.ACTIVE.value;
+    }
+
+    public void update(CategoryForm form) {
+        this.name=form.getName();
+    }
+    
     public Category() {
     }
 
@@ -112,5 +135,5 @@ public class Category implements Serializable {
     public String toString() {
         return "com.underscore.ekartapp.entity.Category[ id=" + id + " ]";
     }
-    
+
 }

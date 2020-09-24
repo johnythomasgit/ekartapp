@@ -5,6 +5,7 @@
  */
 package com.underscore.ekartapp.entity;
 
+import com.underscore.ekartapp.form.ItemForm;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -35,6 +36,17 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i")})
 public class Item implements Serializable {
 
+    public static enum Status {
+        INACTIVE((short) 0),
+        ACTIVE((short) 1),
+        DELETED((short) 2);
+
+        public final short value;
+
+        private Status(short value) {
+            this.value = value;
+        }
+    }
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -94,6 +106,19 @@ public class Item implements Serializable {
         this.status = status;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
+    }
+
+    public Item(ItemForm form, User user) {
+        this.name = form.getName();
+        this.description = form.getDescription();
+        this.price = form.getPrice();
+        this.quantity = form.getQuantity();
+        this.categoryId = new Category(form.getCategoryId());
+        this.userId=user;
+        this.status = Status.ACTIVE.value;
+        Date date = new Date();
+        this.createdDate = date;
+        this.updatedDate = date;
     }
 
     public Integer getId() {
@@ -224,5 +249,5 @@ public class Item implements Serializable {
     public String toString() {
         return "com.underscore.ekartapp.entity.Item[ id=" + id + " ]";
     }
-    
+
 }

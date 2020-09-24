@@ -48,10 +48,18 @@ public class ItemImage implements Serializable {
         this.id = id;
     }
 
-    public ItemImage(Integer id, String imagePath) {
+    public ItemImage(Integer id, String imagePath, Item itemId) {
         this.id = id;
         this.imagePath = imagePath;
+        this.itemId = itemId;
     }
+    
+    public ItemImage(Item item,String filename) {
+        this.imagePath = filename;
+        this.itemId = item;
+    }
+
+    
 
     public Integer getId() {
         return id;

@@ -1,6 +1,7 @@
 
 package com.underscore.ekartapp.form;
 
+import java.math.BigDecimal;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,8 +25,8 @@ public class ItemUpdateForm {
     private String description;
     
     @NotNull(message = "item.price.is.empty")
-    @Digits(integer=7,fraction = 0,message = "price.exceeds.size")
-    private Integer price;
+    @Digits(integer=7,fraction = 2,message = "price.exceeds.size")
+    private BigDecimal price;
     
     @NotNull(message = "item.quantity.is.empty")
     @Digits(integer=7,fraction = 0,message = "item.quantity.exceeds.size")
@@ -83,11 +84,11 @@ public class ItemUpdateForm {
         this.description = description;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

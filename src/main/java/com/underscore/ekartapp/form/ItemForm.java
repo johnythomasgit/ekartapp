@@ -5,7 +5,7 @@
  */
 package com.underscore.ekartapp.form;
 
-import javax.validation.Valid;
+import java.math.BigDecimal;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,21 +26,34 @@ public class ItemForm {
     private String description;
     
     @NotNull(message = "item.price.is.empty")
-    @Digits(integer=7,fraction = 0,message = "price.exceeds.size")
-    private Integer price;
+    @Digits(integer=7,fraction = 2,message = "price.exceeds.size")
+    private BigDecimal price;
     
     @NotNull(message = "item.quantity.is.empty")
     @Digits(integer=7,fraction = 0,message = "item.quantity.exceeds.size")
     private Integer quantity;
     
-    @NotNull(message = "item.delivery.type.is.empty")
-    private Short deliveryType;
-    
     @NotNull(message = "item.category.id.is.empty")
     private Integer categoryId;
-
+    
     @NotNull(message = "item.images.is.empty")
     private MultipartFile  images[];
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
     public Integer getQuantity() {
         return quantity;
@@ -50,14 +63,6 @@ public class ItemForm {
         this.quantity = quantity;
     }
 
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-    
     public String getName() {
         return name;
     }
@@ -74,21 +79,7 @@ public class ItemForm {
         this.description = description;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public short getDeliveryType() {
-        return deliveryType;
-    }
-
-    public void setDeliveryType(short deliveryType) {
-        this.deliveryType = deliveryType;
-    }
+    
 
     public MultipartFile[] getImages() {
         return images;
