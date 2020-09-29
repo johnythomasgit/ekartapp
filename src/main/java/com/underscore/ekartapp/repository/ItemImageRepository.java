@@ -16,7 +16,10 @@ import org.springframework.data.repository.Repository;
  */
 public interface ItemImageRepository extends Repository<ItemImage, Integer>{
     ItemImage findById(Integer itemId);
+    ItemImage findByImagePath(String imagePath);
     ItemImage save(ItemImage itemImage);
     List<ItemImage> findByItemId(Item item);
     void deleteByItemId(Item item);
+    void deleteById(Integer id);
+    void deleteByImagePath(String imagePath);
 }

@@ -6,6 +6,7 @@
 package com.underscore.ekartapp.entity;
 
 import com.underscore.ekartapp.form.ItemForm;
+import com.underscore.ekartapp.form.ItemUpdateForm;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -67,6 +68,12 @@ public class Item implements Serializable {
     @Basic(optional = false)
     @NotNull
     private int quantity;
+    @Size(max = 45)
+    private String gender;
+    @Size(max = 45)
+    private String age;
+    @Size(max = 45)
+    private String colour;
     private Short deliveryType;
     @Basic(optional = false)
     @NotNull
@@ -114,10 +121,26 @@ public class Item implements Serializable {
         this.price = form.getPrice();
         this.quantity = form.getQuantity();
         this.categoryId = new Category(form.getCategoryId());
+        this.colour=form.getColour();
+        this.gender=form.getGender();
+        this.age=form.getAge();
         this.userId=user;
         this.status = Status.ACTIVE.value;
         Date date = new Date();
         this.createdDate = date;
+        this.updatedDate = date;
+    }
+    
+    public void update(ItemUpdateForm form, User user) {
+        this.name = form.getName();
+        this.description = form.getDescription();
+        this.price = form.getPrice();
+        this.quantity = form.getQuantity();
+        this.categoryId = new Category(form.getCategoryId());
+        this.colour=form.getColour();
+        this.gender=form.getGender();
+        this.age=form.getAge();
+        Date date = new Date();
         this.updatedDate = date;
     }
 
@@ -127,6 +150,30 @@ public class Item implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 
     public String getName() {

@@ -24,6 +24,9 @@ public class ItemView {
     private int quantity;
     private Short deliveryType;
     private short status;
+    private String gender;
+    private String age;
+    private String colour;
     private long createdDate;
     private long updatedDate;
     private UserView user;
@@ -50,6 +53,9 @@ public class ItemView {
         this.description = item.getDescription();
         this.quantity = item.getQuantity();
         this.price = item.getPrice();
+        this.age=item.getAge();
+        this.gender=item.getGender();
+        this.colour=item.getColour();
         this.deliveryType = item.getDeliveryType();
         this.status = item.getStatus();
         this.createdDate = item.getCreatedDate().getTime();
@@ -57,6 +63,30 @@ public class ItemView {
         this.user = new UserView(item.getUserId());
         this.category = new CategoryView(item.getCategoryId());
         this.itemImageList = (item.getItemImageList() != null) ? (item.getItemImageList().stream().map(obj -> (new ItemImageView(obj,downloadUrl))).collect(Collectors.toList())) : null;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 
     public BigDecimal getPrice() {

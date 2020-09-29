@@ -11,6 +11,7 @@ import com.underscore.ekartapp.entity.ItemImage;
 import com.underscore.ekartapp.entity.User;
 import com.underscore.ekartapp.exception.NotFoundException;
 import com.underscore.ekartapp.form.ItemForm;
+import com.underscore.ekartapp.form.ItemUpdateForm;
 import com.underscore.ekartapp.repository.CategoryRepository;
 import com.underscore.ekartapp.repository.ItemImageRepository;
 import com.underscore.ekartapp.repository.ItemRepository;
@@ -81,14 +82,14 @@ public class ItemServiceImpl implements ItemService {
         }
         item.setItemImageList(itemImageRepository.findByItemId(item));
         item.setCategoryId(categoryRepository.findById(form.getCategoryId()));
-        System.out.println("downloadUrl---------------------------------------"+downloadUrl);
-        return new ItemView(item,downloadUrl);
+        System.out.println("downloadUrl---------------------------------------" + downloadUrl);
+        return new ItemView(item, downloadUrl);
     }
 
     @Override
     public List<ItemView> getAll() {
-       List<Item> itemList = itemRepository.findByStatusOrderByUpdatedDateDesc(Item.Status.ACTIVE.value);
-       return itemList.stream().map(item -> new ItemView(item,downloadUrl)).collect(Collectors.toList());
+        List<Item> itemList = itemRepository.findByStatusOrderByUpdatedDateDesc(Item.Status.ACTIVE.value);
+        return itemList.stream().map(item -> new ItemView(item, downloadUrl)).collect(Collectors.toList());
     }
 
     public void downloadImageFile(String fileName, HttpServletResponse response) {
@@ -110,4 +111,49 @@ public class ItemServiceImpl implements ItemService {
             ex.printStackTrace();
         }
     }
+
+    @Override
+    public ItemView updateItem(ItemUpdateForm form) {
+
+        User user = userRepository.findById(SecurityUtil.getCurrentUserId()).orElseThrow(NotFoundException::new);
+        Item item = itemRepository.findById(form.getId());
+        item.update(form, user);
+        itemRepository.save(item);
+        if (form.getRemoveUrls() != null) {
+            for (String url : form.getRemoveUrls()) {
+                String imagePath = url.substring(url.lastIndexOf("/media/downloadFile/")+"/media/downloadFile/".length());
+                ItemImage itemImage = itemImageRepository.findByImagePath(imagePath);
+                if (itemImage != null) {
+                    try {
+                        amazonS3Storage.delete(itemImage.getImagePath());
+                    } catch (IOException ex) {
+                        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "image.upload.failed");
+                    }
+                    itemImageRepository.deleteById(itemImage.getId());
+                }
+            }
+        }
+        if (form.getImages() != null) {
+            for (MultipartFile image : form.getImages()) {
+                try {
+                    String fileName = "item_" + System.currentTimeMillis() + StringUtils.cleanPath(image.getOriginalFilename().replaceAll("\\s+", "_"));
+                    Storage.Info imageInfo = amazonS3Storage.saveImage(fileName, image, false);
+                    ItemImage itemImage = new ItemImage(item, fileName);
+                    itemImageRepository.save(itemImage);
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "image.upload.failed");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "image.upload.failed");
+                }
+            }
+        }
+        item.setItemImageList(itemImageRepository.findByItemId(item));
+        item.setCategoryId(categoryRepository.findById(form.getCategoryId()));
+        System.out.println("downloadUrl---------------------------------------" + downloadUrl);
+        return new ItemView(item, downloadUrl);
+    }
+
 }

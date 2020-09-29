@@ -36,9 +36,40 @@ public class ItemForm {
     @NotNull(message = "item.category.id.is.empty")
     private Integer categoryId;
     
+    @Size(max = 45, message = "gender.exceeds.size")
+    private String gender;
+    @Size(max = 45, message = "age.exceeds.size")
+    private String age;
+    @Size(max = 45, message = "colour.exceeds.size")
+    private String colour;
+    
     @NotNull(message = "item.images.is.empty")
     private MultipartFile  images[];
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+    
     public Integer getCategoryId() {
         return categoryId;
     }

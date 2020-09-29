@@ -16,6 +16,7 @@ public class ItemUpdateForm {
     
     @NotNull(message = "item.id.is.empty")
     private Integer id;
+    
     @NotNull(message = "item.name.is.empty")
     @Size(min = 1, max = 100, message = "item.name.is.not.valid")
     private String name;
@@ -32,17 +33,63 @@ public class ItemUpdateForm {
     @Digits(integer=7,fraction = 0,message = "item.quantity.exceeds.size")
     private Integer quantity;
     
-    @NotNull(message = "item.delivery.type.is.empty")
-    private Short deliveryType;
-    
     @NotNull(message = "item.category.id.is.empty")
     private Integer categoryId;
-
+    
+    @Size(max = 45, message = "gender.exceeds.size")
+    private String gender;
+    
+    @Size(max = 45, message = "age.exceeds.size")
+    private String age;
+    
+    @Size(max = 45, message = "colour.exceeds.size")
+    private String colour;
+    
     @Nullable
     private MultipartFile  images[];
     
     @Nullable
-    private String  imageUrls[];
+    private String  removeUrls[];
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+    
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
     public Integer getQuantity() {
         return quantity;
@@ -52,22 +99,6 @@ public class ItemUpdateForm {
         this.quantity = quantity;
     }
 
-    public String[] getImageUrls() {
-        return imageUrls;
-    }
-
-    public void setImageUrls(String[] imageUrls) {
-        this.imageUrls = imageUrls;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-    
     public String getName() {
         return name;
     }
@@ -84,30 +115,6 @@ public class ItemUpdateForm {
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public short getDeliveryType() {
-        return deliveryType;
-    }
-
-    public void setDeliveryType(short deliveryType) {
-        this.deliveryType = deliveryType;
-    }
-
     public MultipartFile[] getImages() {
         return images;
     }
@@ -115,6 +122,21 @@ public class ItemUpdateForm {
     public void setImages(MultipartFile[] images) {
         this.images = images;
     }
-    
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String[] getRemoveUrls() {
+        return removeUrls;
+    }
+
+    public void setRemoveUrls(String[] removeUrls) {
+        this.removeUrls = removeUrls;
+    }
     
 }
