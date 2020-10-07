@@ -6,6 +6,7 @@
 package com.underscore.ekartapp.entity;
 
 import com.underscore.ekartapp.form.UserForm;
+import com.underscore.ekartapp.form.UserUpdateForm;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,12 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
 public class User implements Serializable {
+
+    public void update(UserUpdateForm form) {
+        this.email=form.getEmail();
+        this.name=form.getName();
+        this.phone=form.getPhone();
+    }
     
     public static enum Status {
         INACTIVE((short) 0),

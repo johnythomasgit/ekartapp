@@ -7,6 +7,7 @@ package com.underscore.ekartapp.service;
 
 import com.underscore.ekartapp.form.ItemForm;
 import com.underscore.ekartapp.form.ItemUpdateForm;
+import com.underscore.ekartapp.form.StatusUpdateForm;
 import com.underscore.ekartapp.view.ItemView;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface ItemService {
     ItemView addItem(ItemForm form);
     ItemView updateItem(ItemUpdateForm form);
+    ItemView updateItemStatus(StatusUpdateForm form);
     List<ItemView> getAll();
     void downloadImageFile(String fileName, HttpServletResponse response);
 }

@@ -16,5 +16,6 @@ import org.springframework.data.repository.Repository;
  */
 public interface UserAddressRepository extends Repository<UserAddress, Integer>  {
     UserAddress save(UserAddress obj);
+    UserAddress findById(Integer id);
     List<UserAddress> findByUserId(User obj);
 }

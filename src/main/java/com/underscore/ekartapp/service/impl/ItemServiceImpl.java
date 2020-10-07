@@ -12,6 +12,7 @@ import com.underscore.ekartapp.entity.User;
 import com.underscore.ekartapp.exception.NotFoundException;
 import com.underscore.ekartapp.form.ItemForm;
 import com.underscore.ekartapp.form.ItemUpdateForm;
+import com.underscore.ekartapp.form.StatusUpdateForm;
 import com.underscore.ekartapp.repository.CategoryRepository;
 import com.underscore.ekartapp.repository.ItemImageRepository;
 import com.underscore.ekartapp.repository.ItemRepository;
@@ -154,6 +155,20 @@ public class ItemServiceImpl implements ItemService {
         item.setCategoryId(categoryRepository.findById(form.getCategoryId()));
         System.out.println("downloadUrl---------------------------------------" + downloadUrl);
         return new ItemView(item, downloadUrl);
+    }
+
+    @Override
+    public ItemView updateItemStatus(StatusUpdateForm form) {
+        Item item = itemRepository.findById(form.getId());
+        if(item==null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "item.not.found");
+        }
+        if (!((form.getStatus() == Item.Status.ACTIVE.value) || (form.getStatus() == Item.Status.INACTIVE.value))) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "status.not.valid");
+        }
+            
+        item.setStatus(form.getStatus());
+        return new ItemView(item,downloadUrl);
     }
 
 }

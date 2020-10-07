@@ -10,9 +10,11 @@ import com.underscore.ekartapp.entity.User;
 import com.underscore.ekartapp.entity.UserAddress;
 import com.underscore.ekartapp.exception.BadRequestException;
 import com.underscore.ekartapp.exception.InvalidTokenException;
+import com.underscore.ekartapp.exception.NotFoundException;
 import com.underscore.ekartapp.exception.TokenExpiredException;
 import com.underscore.ekartapp.form.LoginForm;
 import com.underscore.ekartapp.form.UserForm;
+import com.underscore.ekartapp.form.UserUpdateForm;
 import com.underscore.ekartapp.repository.UserAddressRepository;
 import com.underscore.ekartapp.repository.UserRepository;
 import static com.underscore.ekartapp.security.AccessTokenUserDetailsService.PURPOSE_ACCESS_TOKEN;
@@ -157,6 +159,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void downloadImageFile(String fileName, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public UserView update(UserUpdateForm form) {
+        User user = userRepository.findById(form.getId()).orElseThrow(NotFoundException::new);
+        user.update(form);
+        UserAddress userAddress = userAddressRepository.findById(user.getUserAddressList().get(0).getId());
+        userAddress.update(form);
+        user.setUserAddressList((List<UserAddress>) userAddressRepository.findByUserId(user));
+        user = userRepository.findById(user.getId()).orElse(user);
+        return new UserView(user);
     }
     
 }

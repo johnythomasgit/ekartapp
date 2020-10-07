@@ -93,7 +93,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(value = {HttpMessageNotReadableException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseView validException(HttpMessageNotReadableException ex) {
-        return new ResponseView(null, "Illegal Argument", "Illegal Argument used");
+        return new ResponseView(null, "HttpMessageNotReadableException", "HttpMessageNotReadableException");
     }
 
 }

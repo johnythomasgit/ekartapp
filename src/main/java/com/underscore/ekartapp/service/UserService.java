@@ -22,6 +22,7 @@ package com.underscore.ekartapp.service;
 import com.underscore.ekartapp.exception.BadRequestException;
 import com.underscore.ekartapp.form.LoginForm;
 import com.underscore.ekartapp.form.UserForm;
+import com.underscore.ekartapp.form.UserUpdateForm;
 import com.underscore.ekartapp.view.LoginView;
 import com.underscore.ekartapp.view.UserView;
 import java.util.List;
@@ -38,6 +39,8 @@ import org.springframework.validation.Errors;
 public interface UserService {
 
     UserView add(UserForm form);
+
+    UserView update(UserUpdateForm form);
 
     UserView currentUser();
 

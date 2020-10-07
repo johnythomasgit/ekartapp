@@ -6,6 +6,7 @@
 package com.underscore.ekartapp.entity;
 
 import com.underscore.ekartapp.form.UserForm;
+import com.underscore.ekartapp.form.UserUpdateForm;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -181,6 +182,14 @@ public class UserAddress implements Serializable {
     @Override
     public String toString() {
         return "com.underscore.ekartapp.entity.UserAddress[ id=" + id + " ]";
+    }
+
+    public void update(UserUpdateForm form) {
+         this.house = form.getAddress();
+        this.city = form.getCity();
+        this.post = form.getPost();
+        Date dt = new Date();
+        this.updatedDate = dt;
     }
     
 }
