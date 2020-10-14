@@ -11,6 +11,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
+      - mv target/ekartapp-0.0.1-SNAPSHOT.jar ekartapp-0.0.1-SNAPSHOT.jar
 artifacts:
   files:
-    - target/ekartapp-0.0.1-SNAPSHOT.jar
+    - ekartapp-0.0.1-SNAPSHOT.jar

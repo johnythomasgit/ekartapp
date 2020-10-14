@@ -34,6 +34,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -162,12 +163,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserView update(UserUpdateForm form) {
         User user = userRepository.findById(form.getId()).orElseThrow(NotFoundException::new);
         user.update(form);
+        
         UserAddress userAddress = userAddressRepository.findById(user.getUserAddressList().get(0).getId());
         userAddress.update(form);
+        userAddressRepository.save(userAddress);
+        
         user.setUserAddressList((List<UserAddress>) userAddressRepository.findByUserId(user));
+        userRepository.save(user);
+        
         user = userRepository.findById(user.getId()).orElse(user);
         return new UserView(user);
     }

@@ -62,6 +62,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .securityContext().and()
                 .anonymous().and()
                 .authorizeRequests()
+                .antMatchers(GET, "/").permitAll()
                 .antMatchers(POST, "/users").anonymous()
                 .antMatchers(GET, "/media/downloadFile/**").anonymous()
                 .antMatchers("/login/**").anonymous()

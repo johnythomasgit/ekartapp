@@ -28,11 +28,11 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -158,6 +158,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional
     public ItemView updateItemStatus(StatusUpdateForm form) {
         Item item = itemRepository.findById(form.getId());
         if(item==null){
@@ -168,6 +169,7 @@ public class ItemServiceImpl implements ItemService {
         }
             
         item.setStatus(form.getStatus());
+        itemRepository.save(item);
         return new ItemView(item,downloadUrl);
     }
 
