@@ -51,6 +51,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -61,15 +62,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class AmazonS3Storage implements Storage, InitializingBean {
     @Value("${aws.s3.bucket}")
     private String bucket;
+    @Value("${aws.s3.region}")
     private String region;
+    @Value("${aws.s3.s3Url}")
     private String s3Url;
     @Value("${aws.s3.basepath}")
     private String basePath;
-
     @Value("${aws.s3.bucket}")
     private String cloudBucket;
-    @Value("${upload.storage}")
-    private String storage;
     @Value("${aws.access.key}")
     private String accessKey;
     @Value("${aws.access.secret}")
@@ -97,22 +97,19 @@ public class AmazonS3Storage implements Storage, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Assert.notNull(s3Url, "s3Url must be set.");
+        
         Assert.notNull(bucket, "bucket must be set.");
-        Assert.notNull(region, "region must be set. Eg: ap-south-1");
-        System.out.println("Enter after property");
-          
+        Assert.notNull(accessKey, "accessKey must be present.");
+        Assert.notNull(accessSecret, "accessSecret must be present.");
+        Assert.notNull(region, "region must be set.");
                     
-        if (getStorage().equals("local")) {
-                    System.out.println("Enter after property 1");
+        if (StringUtils.isEmpty(accessKey) && StringUtils.isEmpty(accessSecret)) {
 
             amazonS3Client = AmazonS3ClientBuilder.standard()
                     .withRegion(region)
                     .build();
-                    System.out.println("Enter after property2");
 
         } else {
-                    System.out.println("Enter after property3");
 
             BasicAWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, accessSecret);
             amazonS3Client = AmazonS3ClientBuilder.standard()
@@ -121,18 +118,9 @@ public class AmazonS3Storage implements Storage, InitializingBean {
                     .build();
 
             amazonElasticTranscoder = new AmazonElasticTranscoderClient(awsCredentials);
-                    System.out.println("Enter after property4"+amazonS3Client.listBuckets());
 
-
-//              LOGGER.info("s3 connected::Using IAM role");
-//              amazonS3Client = AmazonS3ClientBuilder.defaultClient();
-//              amazonElasticTranscoder=new AmazonElasticTranscoderClient();
         }
         S3ClientOptions.builder().setPathStyleAccess(true);
-    }
-
-    public String getStorage() {
-        return storage;
     }
 
     public void setS3Url(String s3Url) {
