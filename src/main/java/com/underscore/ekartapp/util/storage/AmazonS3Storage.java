@@ -64,7 +64,7 @@ public class AmazonS3Storage implements Storage, InitializingBean {
     private String bucket;
     @Value("${aws.s3.region}")
     private String region;
-    @Value("${aws.s3.s3Url}")
+    @Value("${aws.s3.url}")
     private String s3Url;
     @Value("${aws.s3.basepath}")
     private String basePath;
