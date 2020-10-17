@@ -6,6 +6,7 @@
 package com.underscore.ekartapp.service.impl;
 
 import com.amazonaws.util.IOUtils;
+import com.underscore.ekartapp.entity.Category;
 import com.underscore.ekartapp.entity.Item;
 import com.underscore.ekartapp.entity.ItemImage;
 import com.underscore.ekartapp.entity.User;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
@@ -122,7 +124,7 @@ public class ItemServiceImpl implements ItemService {
         itemRepository.save(item);
         if (form.getRemoveUrls() != null) {
             for (String url : form.getRemoveUrls()) {
-                String imagePath = url.substring(url.lastIndexOf("/media/downloadFile/")+"/media/downloadFile/".length());
+                String imagePath = url.substring(url.lastIndexOf("/media/downloadFile/") + "/media/downloadFile/".length());
                 ItemImage itemImage = itemImageRepository.findByImagePath(imagePath);
                 if (itemImage != null) {
                     try {
@@ -161,16 +163,44 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public ItemView updateItemStatus(StatusUpdateForm form) {
         Item item = itemRepository.findById(form.getId());
-        if(item==null){
+        if (item == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "item.not.found");
         }
         if (!((form.getStatus() == Item.Status.ACTIVE.value) || (form.getStatus() == Item.Status.INACTIVE.value))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "status.not.valid");
         }
-            
+
         item.setStatus(form.getStatus());
         itemRepository.save(item);
-        return new ItemView(item,downloadUrl);
+        return new ItemView(item, downloadUrl);
+    }
+
+    @Override
+    public List<ItemView> getAll(String key, String categoryId, String fresh) {
+        List<Item> itemList = itemRepository.findByStatusOrderByUpdatedDateDesc(Item.Status.ACTIVE.value);
+        if(!StringUtils.isEmpty(key)){
+            itemList=itemList.stream().filter(item-> item.getName().contains(key)).collect(Collectors.toList());
+        }
+        if(!StringUtils.isEmpty(categoryId)){
+            try{
+                Integer.parseInt(categoryId);
+            }catch(Exception ex){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "category.not.valid");
+            }
+            Category category = categoryRepository.findById(Integer.parseInt(categoryId));
+            if(category==null){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "category.not.found");
+            }
+            itemList=itemList.stream().filter(item-> item.getCategoryId().getId().equals(category.getId())).collect(Collectors.toList());
+        }
+        if(!StringUtils.isEmpty(fresh)){
+            Boolean isFresh = Boolean.parseBoolean(fresh);
+            if(isFresh){
+                Date currentTime=new Date();
+                itemList=itemList.stream().filter(item -> (currentTime.getTime()-item.getUpdatedDate().getTime())<(1000*60*60*24)).collect(Collectors.toList());
+            }
+        }
+        return itemList.stream().map(item -> new ItemView(item, downloadUrl)).collect(Collectors.toList());
     }
 
 }

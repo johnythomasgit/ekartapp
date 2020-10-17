@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -54,6 +55,9 @@ public class ItemController {
     public ResponseView getAll(){
         return new ResponseView(itemService.getAll());
     }
-    
+    @GetMapping("/search")
+    public ResponseView getAll(@RequestParam(name = "searchKey", required = true) String searchKey,@RequestParam(name = "categoryId", required = true) String categoryId,@RequestParam(name = "freshOnly", required = true) String freshOnly){
+        return new ResponseView(itemService.getAll(searchKey,categoryId,freshOnly));
+    }
     
 }
