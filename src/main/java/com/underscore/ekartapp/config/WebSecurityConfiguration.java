@@ -74,6 +74,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .securityContext().and()
                 .anonymous().and()
                 .authorizeRequests()
+                .antMatchers(GET,"/").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers(POST, "/users").anonymous()
                 .antMatchers(GET, "/media/downloadFile/**").anonymous()

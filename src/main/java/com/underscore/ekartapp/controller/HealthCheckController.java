@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class HealthCheckController {
-    @GetMapping("/healthcheck")
-    public ResponseView healthCheck() {
+
+    @GetMapping("/")
+    public ResponseView rootCheck() {
         return new ResponseView("OK");
     }
-    
+
 }

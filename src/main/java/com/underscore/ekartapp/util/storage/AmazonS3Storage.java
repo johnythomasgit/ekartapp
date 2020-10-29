@@ -256,6 +256,8 @@ public class AmazonS3Storage implements Storage, InitializingBean {
     @Override
     public InputStream get(String path) throws IOException {
         try {
+            System.out.println("bucket:--------"+bucket);
+            System.out.println("basePath+path:--------"+basePath+path);
             return amazonS3Client.getObject(bucket, basePath+path).getObjectContent();
         } catch (AmazonClientException ex) {
             throw new IOException("Error in getting S3 object", ex);

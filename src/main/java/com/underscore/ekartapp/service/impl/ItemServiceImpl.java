@@ -6,6 +6,7 @@
 package com.underscore.ekartapp.service.impl;
 
 import com.amazonaws.util.IOUtils;
+import com.underscore.ekartapp.controller.UsersController;
 import com.underscore.ekartapp.entity.Category;
 import com.underscore.ekartapp.entity.Item;
 import com.underscore.ekartapp.entity.ItemImage;
@@ -28,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +62,7 @@ public class ItemServiceImpl implements ItemService {
     private String downloadUrl;
     @Autowired
     Storage amazonS3Storage;
+    Logger logger = Logger.getLogger(ItemServiceImpl.class.getName());
 
     @Override
     @Transactional
@@ -97,6 +100,8 @@ public class ItemServiceImpl implements ItemService {
 
     public void downloadImageFile(String fileName, HttpServletResponse response) {
         try {
+            logger.info("fileName:----------"+fileName);
+            System.out.println("fileName:----------"+fileName);
             response.setHeader("Content-Disposition",
                     "attachment; filename*=UTF-8''" + URLEncoder.encode(fileName, "UTF-8"));
             response.setHeader("Content-Type",
