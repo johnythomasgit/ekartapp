@@ -21,6 +21,6 @@ public interface ItemService {
     ItemView updateItem(ItemUpdateForm form);
     ItemView updateItemStatus(StatusUpdateForm form);
     List<ItemView> getAll();
-    List<ItemView> getAll(String key,String categoryId,String fresh);
+    List<ItemView> getAll(String key,Integer categoryId,Boolean fresh);
     void downloadImageFile(String fileName, HttpServletResponse response);
 }

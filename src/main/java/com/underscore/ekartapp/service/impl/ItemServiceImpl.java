@@ -181,30 +181,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemView> getAll(String key, String categoryId, String fresh) {
-        List<Item> itemList = itemRepository.findByStatusOrderByUpdatedDateDesc(Item.Status.ACTIVE.value);
-        if(!StringUtils.isEmpty(key)){
-            itemList=itemList.stream().filter(item-> item.getName().contains(key)).collect(Collectors.toList());
+    public List<ItemView> getAll(String key, Integer categoryId, Boolean fresh) {
+        
+        List<Item> itemList;
+        if(StringUtils.isEmpty(key)){
+            key="";
         }
-        if(!StringUtils.isEmpty(categoryId)){
-            try{
-                Integer.parseInt(categoryId);
-            }catch(Exception ex){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "category.not.valid");
-            }
-            Category category = categoryRepository.findById(Integer.parseInt(categoryId));
-            if(category==null){
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "category.not.found");
-            }
-            itemList=itemList.stream().filter(item-> item.getCategoryId().getId().equals(category.getId())).collect(Collectors.toList());
-        }
-        if(!StringUtils.isEmpty(fresh)){
-            Boolean isFresh = Boolean.parseBoolean(fresh);
-            if(isFresh){
-                Date currentTime=new Date();
-                itemList=itemList.stream().filter(item -> (currentTime.getTime()-item.getUpdatedDate().getTime())<(1000*60*60*24)).collect(Collectors.toList());
-            }
-        }
+        itemList = itemRepository.getItemList(Item.Status.ACTIVE.value,key,categoryId,fresh);
+        
         return itemList.stream().map(item -> new ItemView(item, downloadUrl)).collect(Collectors.toList());
     }
 

@@ -56,7 +56,10 @@ public class ItemController {
         return new ResponseView(itemService.getAll());
     }
     @GetMapping("/search")
-    public ResponseView getAll(@RequestParam(name = "searchKey", required = true) String searchKey,@RequestParam(name = "categoryId", required = true) String categoryId,@RequestParam(name = "freshOnly", required = true) String freshOnly){
+    public ResponseView getAll(
+            @RequestParam(name = "searchKey", required = false,defaultValue = "") String searchKey,
+            @RequestParam(name = "categoryId", required = false,defaultValue = "0") Integer categoryId,
+            @RequestParam(name = "freshOnly", required = false,defaultValue = "false") Boolean freshOnly){
         return new ResponseView(itemService.getAll(searchKey,categoryId,freshOnly));
     }
     
