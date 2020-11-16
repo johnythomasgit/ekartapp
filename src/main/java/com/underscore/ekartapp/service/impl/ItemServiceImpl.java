@@ -184,6 +184,9 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemView> getAll(String key, Integer categoryId, Boolean fresh) {
         
         List<Item> itemList;
+        if(StringUtils.isEmpty(key)){
+            key="";
+        }
         itemList = itemRepository.getItemList(Item.Status.ACTIVE.value,key,categoryId,fresh);
         
         return itemList.stream().map(item -> new ItemView(item, downloadUrl)).collect(Collectors.toList());
