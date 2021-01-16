@@ -5,13 +5,13 @@
  */
 package com.underscore.ekartapp.config;
 
-import java.time.Duration;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.time.Duration;
+
 /**
- *
  * @author nirmal
  */
 @Validated

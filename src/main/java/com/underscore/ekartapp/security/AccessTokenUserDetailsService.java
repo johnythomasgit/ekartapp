@@ -11,6 +11,7 @@ package com.underscore.ekartapp.security;
 //import com.innovature.c2c.api.util.TokenExpiredException;
 //import com.innovature.c2c.api.util.TokenGenerator;
 //import com.innovature.c2c.api.util.TokenGenerator.Status;
+
 import com.underscore.ekartapp.entity.User;
 import com.underscore.ekartapp.exception.InvalidTokenException;
 import com.underscore.ekartapp.exception.TokenExpiredException;
@@ -23,7 +24,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 
 /**
- *
  * @author nirmal
  */
 public class AccessTokenUserDetailsService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
@@ -33,7 +33,7 @@ public class AccessTokenUserDetailsService implements AuthenticationUserDetailsS
 
     @Autowired
     private TokenGenerator tokenGenerator;
-        
+
     @Autowired
     private UserRepository userRepository;
 
@@ -44,17 +44,17 @@ public class AccessTokenUserDetailsService implements AuthenticationUserDetailsS
         }
 
         final Status status;
-        User user =null;
+        User user = null;
         try {
             status = tokenGenerator.verify(PURPOSE_ACCESS_TOKEN, token.getPrincipal().toString());
             user = userRepository.findById(Integer.parseInt(status.data)).orElse(null);
-        if(user==null){
-            throw new UsernameNotFoundException("Invalid credentials");
-        }
-        if(User.Status.ACTIVE.value!=user.getStatus()){
-            throw new UsernameNotFoundException("Invalid credentials");
-        }
-        
+            if (user == null) {
+                throw new UsernameNotFoundException("Invalid credentials");
+            }
+            if (User.Status.ACTIVE.value != user.getStatus()) {
+                throw new UsernameNotFoundException("Invalid credentials");
+            }
+
         } catch (InvalidTokenException e) {
             throw new UsernameNotFoundException("Invalid access token", e);
         } catch (TokenExpiredException e) {

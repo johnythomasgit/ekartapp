@@ -8,7 +8,6 @@ package com.underscore.ekartapp.view;
 import com.underscore.ekartapp.entity.ItemImage;
 
 /**
- *
  * @author johnythomas
  */
 public class ItemImageView {

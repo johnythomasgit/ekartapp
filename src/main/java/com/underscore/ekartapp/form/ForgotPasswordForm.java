@@ -11,19 +11,18 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 /**
- *
  * @author nirmal
  */
 public class ForgotPasswordForm {
-    
+
     @NotBlank(message = "email.is.empty")
     @Email(message = "email.not.valid")
     private String email;
-    
+
     @NotNull(message = "password.is.empty")
-    @Pattern(regexp ="^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$", message = "password.not.valid")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$", message = "password.not.valid")
     private String password;
-    
+
     public String getEmail() {
         return email;
     }
@@ -40,6 +39,5 @@ public class ForgotPasswordForm {
         this.password = password;
     }
 
-    
 
 }

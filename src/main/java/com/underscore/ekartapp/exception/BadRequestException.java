@@ -5,11 +5,11 @@
  */
 package com.underscore.ekartapp.exception;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import org.springframework.web.server.ResponseStatusException;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
 /**
- *
  * @author nirmal
  */
 public class BadRequestException extends ResponseStatusException {
@@ -25,6 +25,7 @@ public class BadRequestException extends ResponseStatusException {
     public BadRequestException(String reason, Throwable cause) {
         super(BAD_REQUEST, reason, cause);
     }
+
     @Override
     public synchronized Throwable fillInStackTrace() {
         return this;

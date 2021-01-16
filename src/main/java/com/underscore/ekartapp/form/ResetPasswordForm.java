@@ -8,7 +8,6 @@ package com.underscore.ekartapp.form;
 import javax.validation.constraints.NotBlank;
 
 /**
- *
  * @author johny
  */
 public class ResetPasswordForm {

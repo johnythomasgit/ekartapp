@@ -6,12 +6,12 @@
 package com.underscore.ekartapp.view;
 
 import com.underscore.ekartapp.entity.Item;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *
  * @author johnythomas
  */
 public class ItemView {
@@ -47,22 +47,22 @@ public class ItemView {
         this.itemImageList = itemImageList;
     }
 
-    public ItemView(Item item,String downloadUrl) {
+    public ItemView(Item item, String downloadUrl) {
         this.id = item.getId();
         this.name = item.getName();
         this.description = item.getDescription();
         this.quantity = item.getQuantity();
         this.price = item.getPrice();
-        this.age=item.getAge();
-        this.gender=item.getGender();
-        this.colour=item.getColour();
+        this.age = item.getAge();
+        this.gender = item.getGender();
+        this.colour = item.getColour();
         this.deliveryType = item.getDeliveryType();
         this.status = item.getStatus();
         this.createdDate = item.getCreatedDate().getTime();
         this.updatedDate = item.getUpdatedDate().getTime();
         this.user = new UserView(item.getUserId());
         this.category = new CategoryView(item.getCategoryId());
-        this.itemImageList = (item.getItemImageList() != null) ? (item.getItemImageList().stream().map(obj -> (new ItemImageView(obj,downloadUrl))).collect(Collectors.toList())) : null;
+        this.itemImageList = (item.getItemImageList() != null) ? (item.getItemImageList().stream().map(obj -> (new ItemImageView(obj, downloadUrl))).collect(Collectors.toList())) : null;
     }
 
     public String getGender() {

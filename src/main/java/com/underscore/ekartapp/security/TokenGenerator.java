@@ -2,14 +2,14 @@ package com.underscore.ekartapp.security;
 
 import com.underscore.ekartapp.exception.InvalidTokenException;
 import com.underscore.ekartapp.exception.TokenExpiredException;
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
+import org.springframework.util.Assert;
+
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.regex.Pattern;
-
-import org.springframework.security.crypto.encrypt.Encryptors;
-import org.springframework.security.crypto.encrypt.TextEncryptor;
-import org.springframework.util.Assert;
 
 /**
  * Utility class for generating and verifying secure tokens. Uses AES 256 bit
@@ -94,10 +94,9 @@ public class TokenGenerator {
      * salt also cannot be null and must be exactly 16 digit hexadecimal value.
      *
      * @param password the password to be used for encryption
-     * @param salt the salt to be used for encryption
-     *
+     * @param salt     the salt to be used for encryption
      * @throws IllegalArgumentException if there is a problem with the given
-     * password or salt
+     *                                  password or salt
      */
     public TokenGenerator(String password, String salt) throws IllegalArgumentException {
         Assert.notNull(password, "password cannot be null");
@@ -114,17 +113,15 @@ public class TokenGenerator {
      * 'A-Z', '0-9' and '_'.
      *
      * @param purpose the tag for identifying the purpose of the token - the
-     * same value has to be passed for verifying the token
-     * @param data the data to be embedded in the token - cannot be null
-     * @param expiry the time in seconds for the expiry of the token - if this
-     * value is not {@code null} and is &gt; 0 milliseconds, a timestamp will be
-     * embedded in the token which will be used during the verification of the
-     * token
-     *
+     *                same value has to be passed for verifying the token
+     * @param data    the data to be embedded in the token - cannot be null
+     * @param expiry  the time in seconds for the expiry of the token - if this
+     *                value is not {@code null} and is &gt; 0 milliseconds, a timestamp will be
+     *                embedded in the token which will be used during the verification of the
+     *                token
      * @return the generated token and its related information
-     *
      * @throws IllegalArgumentException if there is a problem with the given
-     * purpose or data
+     *                                  purpose or data
      */
     public Token create(String purpose, String data, Duration expiry) throws IllegalArgumentException {
         Assert.notNull(purpose, "purpose cannot be null");
@@ -156,11 +153,9 @@ public class TokenGenerator {
      * will be {@link #SEPARATOR}.
      *
      * @param purpose the tag for identifying the purpose of the token - should
-     * match the value given during the creation of the token
-     * @param token the token to be verified
-     *
+     *                match the value given during the creation of the token
+     * @param token   the token to be verified
      * @return the verification status
-     *
      * @see #verify(String, String, boolean)
      */
     public Status verify(String purpose, String token) throws InvalidTokenException, TokenExpiredException {
@@ -173,12 +168,11 @@ public class TokenGenerator {
      * if the token was created with an expiry value &gt; 0 and checkExpiry is
      * {@code true}.
      *
-     * @param purpose the tag for identifying the purpose of the token - should
-     * match the value given during the creation of the token
-     * @param token the token to be verified
+     * @param purpose     the tag for identifying the purpose of the token - should
+     *                    match the value given during the creation of the token
+     * @param token       the token to be verified
      * @param checkExpiry flag specifying whether the token should be checked
-     * for expiry even if it contains an embedded timestamp
-     *
+     *                    for expiry even if it contains an embedded timestamp
      * @return the verification status
      */
     public Status verify(String purpose, String token, boolean checkExpiry) throws InvalidTokenException, TokenExpiredException {

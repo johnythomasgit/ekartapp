@@ -6,20 +6,22 @@
 package com.underscore.ekartapp.repository;
 
 import com.underscore.ekartapp.entity.Category;
-import java.util.List;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.Repository;
 
+import java.util.List;
+
 /**
- *
  * @author johnythomas
  */
 public interface CategoryRepository extends Repository<Category, Integer> {
-        
+
     List<Category> findAll();
+
     Category findById(Integer id);
+
     Category findByName(String name);
-    Category save (Category category);
+
+    Category save(Category category);
+
     void deleteById(Integer id);
 }

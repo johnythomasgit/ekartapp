@@ -8,17 +8,16 @@ package com.underscore.ekartapp.form;
 import javax.validation.constraints.NotNull;
 
 /**
- *
  * @author johny
  */
-public class StatusUpdateForm  {
-        
-    @NotNull(message="id.is.empty")
+public class StatusUpdateForm {
+
+    @NotNull(message = "id.is.empty")
     private Integer id;
-    
-    @NotNull(message="status.is.empty")
+
+    @NotNull(message = "status.is.empty")
     private Short status;
-    
+
     public Integer getId() {
         return id;
     }
@@ -26,7 +25,7 @@ public class StatusUpdateForm  {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public short getStatus() {
         return status;
     }
@@ -35,5 +34,5 @@ public class StatusUpdateForm  {
         this.status = status;
     }
 
-    
+
 }

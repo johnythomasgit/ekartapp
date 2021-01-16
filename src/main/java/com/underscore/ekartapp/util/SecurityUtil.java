@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 package com.underscore.ekartapp.util;
+
 import com.underscore.ekartapp.security.AccessTokenUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
- *
  * @author nirmal
  */
 public final class SecurityUtil {

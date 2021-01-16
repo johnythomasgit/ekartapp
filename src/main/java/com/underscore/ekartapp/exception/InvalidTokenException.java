@@ -6,7 +6,6 @@
 package com.underscore.ekartapp.exception;
 
 /**
- *
  * @author nirmal
  */
 public class InvalidTokenException extends IllegalArgumentException {

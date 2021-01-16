@@ -5,28 +5,16 @@
  */
 package com.underscore.ekartapp.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 
 /**
- *
  * @author johnythomas
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Cart.findAll", query = "SELECT c FROM Cart c")})
+        @NamedQuery(name = "Cart.findAll", query = "SELECT c FROM Cart c")})
 public class Cart implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -114,5 +102,5 @@ public class Cart implements Serializable {
     public String toString() {
         return "com.underscore.ekartapp.entity.Cart[ id=" + id + " ]";
     }
-    
+
 }

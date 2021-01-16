@@ -13,15 +13,15 @@ import com.underscore.ekartapp.repository.ItemRepository;
 import com.underscore.ekartapp.service.CategoryService;
 import com.underscore.ekartapp.view.CategoryView;
 import com.underscore.ekartapp.view.ResponseView;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
- *
  * @author johny
  */
 @Service
@@ -49,8 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
             if (category.getStatus() != Category.Status.ACTIVE.value) {
                 category.setStatus(Category.Status.ACTIVE.value);
                 return new CategoryView(categoryRepository.save(category));
-            }
-            else {
+            } else {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "category.exist");
             }
 

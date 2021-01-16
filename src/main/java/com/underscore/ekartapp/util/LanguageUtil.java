@@ -5,12 +5,12 @@
  */
 package com.underscore.ekartapp.util;
 
-import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
+import java.util.Locale;
+
 /**
- *
  * @author Libeesh
  */
 public class LanguageUtil {

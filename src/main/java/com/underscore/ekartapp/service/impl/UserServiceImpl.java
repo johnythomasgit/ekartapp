@@ -17,17 +17,12 @@ import com.underscore.ekartapp.form.UserForm;
 import com.underscore.ekartapp.form.UserUpdateForm;
 import com.underscore.ekartapp.repository.UserAddressRepository;
 import com.underscore.ekartapp.repository.UserRepository;
-import static com.underscore.ekartapp.security.AccessTokenUserDetailsService.PURPOSE_ACCESS_TOKEN;
-import static com.underscore.ekartapp.security.AccessTokenUserDetailsService.PURPOSE_REFRESH_TOKEN;
 import com.underscore.ekartapp.security.TokenGenerator;
 import com.underscore.ekartapp.security.TokenGenerator.Status;
 import com.underscore.ekartapp.security.TokenGenerator.Token;
 import com.underscore.ekartapp.service.UserService;
 import com.underscore.ekartapp.view.LoginView;
 import com.underscore.ekartapp.view.UserView;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -38,31 +33,37 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+import static com.underscore.ekartapp.security.AccessTokenUserDetailsService.PURPOSE_ACCESS_TOKEN;
+import static com.underscore.ekartapp.security.AccessTokenUserDetailsService.PURPOSE_REFRESH_TOKEN;
+
 /**
- *
  * @author johnythomas
  */
 @Service
 public class UserServiceImpl implements UserService {
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private UserAddressRepository userAddressRepository;
-    
+
     @Autowired
     private TokenGenerator tokenGenerator;
-    
+
     @Autowired
     private SecurityConfig securityConfig;
 
     @Override
     public UserView add(UserForm form) {
-       
+
         User user = userRepository.findByEmail(form.getEmail()).orElse(null);
 
         if (user != null) {
@@ -70,10 +71,10 @@ public class UserServiceImpl implements UserService {
         }
         String password = passwordEncoder.encode(form.getPassword());
         user = userRepository.save(new User(form, password));
-        UserAddress userAddress = userAddressRepository.save(new UserAddress(form,user));
+        UserAddress userAddress = userAddressRepository.save(new UserAddress(form, user));
         user = userRepository.findById(user.getId()).orElse(user);
         user.setUserAddressList((List<UserAddress>) userAddressRepository.findByUserId(user));
-        if(user.getUserAddressList()==null){
+        if (user.getUserAddressList() == null) {
             System.out.println("\n\n Nulle ........\n\n");
         }
 //        if (form.getPassword() == null) {
@@ -97,7 +98,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginView login(LoginForm form, Errors errors) throws BadRequestException {
-            if (errors.hasErrors()) {
+        if (errors.hasErrors()) {
             throw new BadRequestException("invalid.credentials");
         }
         User user = userRepository.findByEmail(form.getEmail()).orElse(null);
@@ -116,22 +117,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginView refresh(String refreshToken) throws BadRequestException {
-       Status status;
+        Status status;
         try {
             status = tokenGenerator.verify(PURPOSE_REFRESH_TOKEN, refreshToken);
-        }
-        catch (InvalidTokenException e) {
+        } catch (InvalidTokenException e) {
             throw new BadRequestException("Invalid token", e);
-        }
-        catch (TokenExpiredException e) {
+        } catch (TokenExpiredException e) {
             throw new BadRequestException("Token expired", e);
         }
 
         int userId;
         try {
             userId = Integer.parseInt(status.data.substring(0, 10));
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new BadRequestException("Invalid token", e);
         }
 
@@ -147,7 +145,7 @@ public class UserServiceImpl implements UserService {
                 new LoginView.TokenView(refreshToken, status.expiry)
         );
     }
-    
+
     private static BadRequestException badRequestException() {
         return new BadRequestException("invalid.credentials");
     }
@@ -167,16 +165,16 @@ public class UserServiceImpl implements UserService {
     public UserView update(UserUpdateForm form) {
         User user = userRepository.findById(form.getId()).orElseThrow(NotFoundException::new);
         user.update(form);
-        
+
         UserAddress userAddress = userAddressRepository.findById(user.getUserAddressList().get(0).getId());
         userAddress.update(form);
         userAddressRepository.save(userAddress);
-        
+
         user.setUserAddressList((List<UserAddress>) userAddressRepository.findByUserId(user));
         userRepository.save(user);
-        
+
         user = userRepository.findById(user.getId()).orElse(user);
         return new UserView(user);
     }
-    
+
 }

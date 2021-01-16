@@ -7,33 +7,20 @@ package com.underscore.ekartapp.entity;
 
 import com.underscore.ekartapp.form.UserForm;
 import com.underscore.ekartapp.form.UserUpdateForm;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
- *
  * @author johnythomas
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "UserAddress.findAll", query = "SELECT u FROM UserAddress u")})
+        @NamedQuery(name = "UserAddress.findAll", query = "SELECT u FROM UserAddress u")})
 public class UserAddress implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -185,11 +172,11 @@ public class UserAddress implements Serializable {
     }
 
     public void update(UserUpdateForm form) {
-         this.house = form.getAddress();
+        this.house = form.getAddress();
         this.city = form.getCity();
         this.post = form.getPost();
         Date dt = new Date();
         this.updatedDate = dt;
     }
-    
+
 }

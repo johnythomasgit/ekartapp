@@ -6,7 +6,6 @@
 package com.underscore.ekartapp.form;
 
 /**
- *
  * @author johny
  */
 public class CategoryForm {

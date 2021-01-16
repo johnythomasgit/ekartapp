@@ -6,11 +6,11 @@
 package com.underscore.ekartapp.view;
 
 import com.underscore.ekartapp.entity.User;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *
  * @author nirmal
  */
 public class UserView {
@@ -41,8 +41,8 @@ public class UserView {
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
     }
-    
-    
+
+
     public UserView(User user) {
         this.id = user.getId();
         this.name = user.getName();
@@ -53,13 +53,12 @@ public class UserView {
         this.imageUrl = user.getImageUrl();
         this.status = user.getStatus();
         this.paymentId = user.getPaymentId();
-        this.addresses = (user.getUserAddressList()!=null)?(user.getUserAddressList().stream().map(obj-> new UserAddressView(obj)).collect(Collectors.toList())):null;
+        this.addresses = (user.getUserAddressList() != null) ? (user.getUserAddressList().stream().map(obj -> new UserAddressView(obj)).collect(Collectors.toList())) : null;
         this.createdDate = user.getCreatedDate().getTime();
         this.updatedDate = user.getCreatedDate().getTime();
     }
 
-    
-    
+
     public Integer getId() {
         return id;
     }
@@ -147,6 +146,6 @@ public class UserView {
     public void setUpdatedDate(long updatedDate) {
         this.updatedDate = updatedDate;
     }
-    
-    
+
+
 }

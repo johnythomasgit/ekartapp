@@ -8,7 +8,6 @@ package com.underscore.ekartapp.view;
 import com.underscore.ekartapp.entity.Category;
 
 /**
- *
  * @author johny
  */
 public class CategoryView {

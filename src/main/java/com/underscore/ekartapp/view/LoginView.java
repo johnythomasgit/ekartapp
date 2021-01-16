@@ -8,10 +8,10 @@ package com.underscore.ekartapp.view;
 import com.underscore.ekartapp.entity.User;
 import com.underscore.ekartapp.security.TokenGenerator.Token;
 import com.underscore.ekartapp.util.Json;
+
 import java.util.Date;
 
 /**
- *
  * @author nirmal
  */
 public class LoginView extends UserView {

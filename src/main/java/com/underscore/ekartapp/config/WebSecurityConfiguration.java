@@ -11,20 +11,15 @@ import com.underscore.ekartapp.security.AccessTokenProcessingFilter;
 import com.underscore.ekartapp.security.AccessTokenUserDetailsService;
 import com.underscore.ekartapp.security.TokenGenerator;
 import com.underscore.ekartapp.view.ResponseView;
-import java.util.Arrays;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.ErrorPageRegistrar;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -34,14 +29,20 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 /**
- *
  * @author nirmal
  */
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-    
+
     private static final String[] AUTH_WHITELIST = {
             // -- swagger ui
             "/v2/api-docs",
@@ -74,36 +75,35 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .securityContext().and()
                 .anonymous().and()
                 .authorizeRequests()
-                .antMatchers(GET,"/").permitAll()
+                .antMatchers(GET, "/").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers(POST, "/users").anonymous()
                 .antMatchers(GET, "/media/downloadFile/**").anonymous()
                 .antMatchers("/login/**").anonymous()
                 .anyRequest().authenticated();
     }
-  
-    
+
+
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() 
-    {
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
-        
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
+
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-    
+
     @Bean
-public static ErrorPageRegistrar securityErrorPageRegistrar() {
-    return registry -> registry.addErrorPages(new ErrorPage(RequestRejectedException.class, "/errors/400"));
-}
-    
+    public static ErrorPageRegistrar securityErrorPageRegistrar() {
+        return registry -> registry.addErrorPages(new ErrorPage(RequestRejectedException.class, "/errors/400"));
+    }
+
     @Bean
     protected AccessTokenUserDetailsService accessTokenUserDetailsService() {
         return new AccessTokenUserDetailsService();
     }
-   
+
     @Bean
     public AuthenticationEntryPoint unauthorizedEntryPoint() {
         return (request, response, authException) -> {
