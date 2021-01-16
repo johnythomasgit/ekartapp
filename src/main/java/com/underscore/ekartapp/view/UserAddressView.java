@@ -9,11 +9,10 @@ import com.underscore.ekartapp.entity.UserAddress;
 
 
 /**
- *
  * @author johnythomas
  */
 public class UserAddressView {
-    
+
     public Integer id;
     public String house;
     public String city;
@@ -27,6 +26,7 @@ public class UserAddressView {
         this.post = post;
         this.coordinates = coordinates;
     }
+
     public UserAddressView(UserAddress obj) {
         this.id = obj.getId();
         this.house = obj.getHouse();
@@ -34,7 +34,7 @@ public class UserAddressView {
         this.post = obj.getPost();
         this.coordinates = obj.getCoordinates();
     }
-    
+
     public Integer getId() {
         return id;
     }
@@ -74,5 +74,5 @@ public class UserAddressView {
     public void setCoordinates(String coordinates) {
         this.coordinates = coordinates;
     }
-    
+
 }

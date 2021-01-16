@@ -5,11 +5,11 @@
  */
 package com.underscore.ekartapp.exception;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 import org.springframework.web.server.ResponseStatusException;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 /**
- *
  * @author nirmal
  */
 public class NotFoundException extends ResponseStatusException {
@@ -25,6 +25,7 @@ public class NotFoundException extends ResponseStatusException {
     public NotFoundException(String reason, Throwable cause) {
         super(NOT_FOUND, reason, cause);
     }
+
     @Override
     public synchronized Throwable fillInStackTrace() {
         return this;

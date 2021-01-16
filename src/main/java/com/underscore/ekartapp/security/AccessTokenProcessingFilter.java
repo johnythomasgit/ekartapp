@@ -5,14 +5,15 @@
  */
 package com.underscore.ekartapp.security;
 
-import static com.underscore.ekartapp.security.AccessTokenUserDetailsService.PURPOSE_ACCESS_TOKEN;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static com.underscore.ekartapp.security.AccessTokenUserDetailsService.PURPOSE_ACCESS_TOKEN;
+
 /**
- *
  * @author nirmal
  */
 public class AccessTokenProcessingFilter extends AbstractPreAuthenticatedProcessingFilter {
@@ -20,7 +21,7 @@ public class AccessTokenProcessingFilter extends AbstractPreAuthenticatedProcess
     private static final Pattern AUTH_PATTERN = Pattern.compile("([0-9a-f]+)");
 
     @Override
-    protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) { 
+    protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
         String authHeader = request.getHeader("authorization");
         if (authHeader == null) {
             return null;

@@ -9,18 +9,13 @@ import com.underscore.ekartapp.form.LoginForm;
 import com.underscore.ekartapp.service.UserService;
 import com.underscore.ekartapp.view.ResponseView;
 import com.underscore.ekartapp.view.UserView;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
- *
  * @author nirmal
  */
 @RestController
@@ -42,7 +37,7 @@ public class LoginController {
 
     @PutMapping
     public ResponseView refresh(@RequestBody String refreshToken) {
-       return new ResponseView(userService.refresh(refreshToken));
+        return new ResponseView(userService.refresh(refreshToken));
     }
 
 //    @PostMapping("/forgot")

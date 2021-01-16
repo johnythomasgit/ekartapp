@@ -7,51 +7,41 @@ package com.underscore.ekartapp.entity;
 
 import com.underscore.ekartapp.form.UserForm;
 import com.underscore.ekartapp.form.UserUpdateForm;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
- *
  * @author johnythomas
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
+        @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
 public class User implements Serializable {
 
     public void update(UserUpdateForm form) {
-        this.email=form.getEmail();
-        this.name=form.getName();
-        this.phone=form.getPhone();
+        this.email = form.getEmail();
+        this.name = form.getName();
+        this.phone = form.getPhone();
     }
-    
+
     public static enum Status {
         INACTIVE((short) 0),
         ACTIVE((short) 1),
         DELETED((short) 2);
-        
+
         public final short value;
 
         private Status(short value) {
             this.value = value;
         }
     }
-        public static enum Role {
+
+    public static enum Role {
         BUYER((short) 1),
         SELLER((short) 2),
         ADMIN((short) 3);
@@ -60,8 +50,8 @@ public class User implements Serializable {
         private Role(short value) {
             this.value = value;
         }
-     }
-     
+    }
+
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -138,7 +128,7 @@ public class User implements Serializable {
     }
 
     public User(UserForm form, String password) {
-                this.name = form.getName();
+        this.name = form.getName();
         this.email = form.getEmail();
         this.password = password;
         this.role = User.Role.BUYER.value;
@@ -325,5 +315,5 @@ public class User implements Serializable {
     public String toString() {
         return "com.underscore.ekartapp.entity.User[ id=" + id + " ]";
     }
-    
+
 }

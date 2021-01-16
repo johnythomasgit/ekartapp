@@ -6,7 +6,6 @@
 package com.underscore.ekartapp.form;
 
 /**
- *
  * @author johny
  */
 public class AreaForm {
@@ -17,6 +16,6 @@ public class AreaForm {
     }
 
     public void setName(String name) {
-        this.name = name;   
+        this.name = name;
     }
 }

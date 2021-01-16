@@ -7,34 +7,21 @@ package com.underscore.ekartapp.entity;
 
 import com.underscore.ekartapp.form.ItemForm;
 import com.underscore.ekartapp.form.ItemUpdateForm;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
- *
  * @author johnythomas
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i")})
+        @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i")})
 public class Item implements Serializable {
 
     public static enum Status {
@@ -48,6 +35,7 @@ public class Item implements Serializable {
             this.value = value;
         }
     }
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -121,25 +109,25 @@ public class Item implements Serializable {
         this.price = form.getPrice();
         this.quantity = form.getQuantity();
         this.categoryId = new Category(form.getCategoryId());
-        this.colour=form.getColour();
-        this.gender=form.getGender();
-        this.age=form.getAge();
-        this.userId=user;
+        this.colour = form.getColour();
+        this.gender = form.getGender();
+        this.age = form.getAge();
+        this.userId = user;
         this.status = Status.ACTIVE.value;
         Date date = new Date();
         this.createdDate = date;
         this.updatedDate = date;
     }
-    
+
     public void update(ItemUpdateForm form, User user) {
         this.name = form.getName();
         this.description = form.getDescription();
         this.price = form.getPrice();
         this.quantity = form.getQuantity();
         this.categoryId = new Category(form.getCategoryId());
-        this.colour=form.getColour();
-        this.gender=form.getGender();
-        this.age=form.getAge();
+        this.colour = form.getColour();
+        this.gender = form.getGender();
+        this.age = form.getAge();
         Date date = new Date();
         this.updatedDate = date;
     }

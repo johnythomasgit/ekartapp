@@ -5,24 +5,17 @@
  */
 package com.underscore.ekartapp.entity;
 
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
- *
  * @author johnythomas
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Announcement.findAll", query = "SELECT a FROM Announcement a")})
+        @NamedQuery(name = "Announcement.findAll", query = "SELECT a FROM Announcement a")})
 public class Announcement implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -112,5 +105,5 @@ public class Announcement implements Serializable {
     public String toString() {
         return "com.underscore.ekartapp.entity.Announcement[ id=" + id + " ]";
     }
-    
+
 }

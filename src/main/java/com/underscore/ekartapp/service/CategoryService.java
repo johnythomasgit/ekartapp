@@ -10,18 +10,22 @@ import com.underscore.ekartapp.form.CategoryForm;
 import com.underscore.ekartapp.form.StatusUpdateForm;
 import com.underscore.ekartapp.view.CategoryView;
 import com.underscore.ekartapp.view.ResponseView;
-import java.util.List;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
- *
  * @author johny
  */
 @Service
 public interface CategoryService {
     List<CategoryView> getAllCategories();
+
     CategoryView addCategory(CategoryForm form);
-    CategoryView updateCategory(Integer id,CategoryForm form);
+
+    CategoryView updateCategory(Integer id, CategoryForm form);
+
     ResponseView deleteCategory(Integer id);
+
     CategoryView updateStatus(StatusUpdateForm form);
 }

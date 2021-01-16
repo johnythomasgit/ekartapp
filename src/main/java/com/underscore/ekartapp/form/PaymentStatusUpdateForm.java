@@ -7,21 +7,19 @@ package com.underscore.ekartapp.form;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.springframework.lang.Nullable;
 
 /**
- *
  * @author johny
  */
 public class PaymentStatusUpdateForm {
 
-    @NotNull(message="id.is.empty")
+    @NotNull(message = "id.is.empty")
     private Integer id;
 
-    @NotNull(message="status.is.empty")
+    @NotNull(message = "status.is.empty")
     private Short status;
 
-    @NotNull(message="payment.reference.empty")
+    @NotNull(message = "payment.reference.empty")
     @Size(max = 100, message = "payment.reference.invalid")
     private String paymentReference;
 

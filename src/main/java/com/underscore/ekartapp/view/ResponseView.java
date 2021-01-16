@@ -6,11 +6,10 @@
 package com.underscore.ekartapp.view;
 
 /**
- *
  * @author johny
  */
 public class ResponseView {
-    
+
     private Object result;
     private String errorCode;
     private String errorMessage;
@@ -20,7 +19,7 @@ public class ResponseView {
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
     }
-    
+
     public ResponseView(Object result) {
         this.result = result;
         this.errorCode = "0";
@@ -32,7 +31,7 @@ public class ResponseView {
         this.errorCode = "0";
         this.errorMessage = "";
     }
-    
+
     public Object getResult() {
         return result;
     }

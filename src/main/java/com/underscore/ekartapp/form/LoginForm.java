@@ -10,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 /**
- *
  * @author nirmal
  */
 public class LoginForm {
@@ -19,7 +18,7 @@ public class LoginForm {
     @Size(max = 255)
     @Email
     private String email;
-//    @Password
+    //    @Password
     private String password;
 
     public String getEmail() {

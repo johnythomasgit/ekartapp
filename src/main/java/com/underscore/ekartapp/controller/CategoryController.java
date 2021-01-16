@@ -8,37 +8,33 @@ package com.underscore.ekartapp.controller;
 import com.underscore.ekartapp.form.CategoryForm;
 import com.underscore.ekartapp.service.CategoryService;
 import com.underscore.ekartapp.view.ResponseView;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
- *
  * @author johny
  */
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
-    
+
     @Autowired
     private CategoryService categoryService;
-    
+
     @GetMapping
     public ResponseView getAllCategory() {
 
         return new ResponseView(categoryService.getAllCategories());
     }
-    
+
     @GetMapping("/public")
     public ResponseView getAllCategoryPublic() {
 
         return new ResponseView(categoryService.getAllCategories());
     }
-    
+
     @PostMapping
     public ResponseView addCategory(@Valid @RequestBody CategoryForm form) {
         return new ResponseView(categoryService.addCategory(form));

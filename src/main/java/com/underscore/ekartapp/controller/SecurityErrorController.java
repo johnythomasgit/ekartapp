@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
  * @author johny
  */
 @RestController
 public class SecurityErrorController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-	@RequestMapping("/errors/400")
-	ResponseView error(RequestRejectedException e) {
-		return new ResponseView(null,"BAD_REQUEST","malformed url");
-	}
+    @RequestMapping("/errors/400")
+    ResponseView error(RequestRejectedException e) {
+        return new ResponseView(null, "BAD_REQUEST", "malformed url");
+    }
 }

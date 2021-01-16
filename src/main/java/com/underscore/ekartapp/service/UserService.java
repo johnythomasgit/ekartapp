@@ -19,21 +19,22 @@ package com.underscore.ekartapp.service;
 //import com.innovature.c2c.api.view.LoginView;
 //import com.innovature.c2c.api.view.ResponseView;
 //import com.innovature.c2c.api.view.UserView;
+
 import com.underscore.ekartapp.exception.BadRequestException;
 import com.underscore.ekartapp.form.LoginForm;
 import com.underscore.ekartapp.form.UserForm;
 import com.underscore.ekartapp.form.UserUpdateForm;
 import com.underscore.ekartapp.view.LoginView;
 import com.underscore.ekartapp.view.UserView;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
 /**
- *
  * @author nirmal
  */
 public interface UserService {

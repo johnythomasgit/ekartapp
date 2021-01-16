@@ -6,8 +6,6 @@
 package com.underscore.ekartapp.service.impl;
 
 import com.amazonaws.util.IOUtils;
-import com.underscore.ekartapp.controller.UsersController;
-import com.underscore.ekartapp.entity.Category;
 import com.underscore.ekartapp.entity.Item;
 import com.underscore.ekartapp.entity.ItemImage;
 import com.underscore.ekartapp.entity.User;
@@ -23,15 +21,6 @@ import com.underscore.ekartapp.service.ItemService;
 import com.underscore.ekartapp.util.SecurityUtil;
 import com.underscore.ekartapp.util.storage.Storage;
 import com.underscore.ekartapp.view.ItemView;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -41,8 +30,16 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
 /**
- *
  * @author johnythomas
  */
 @Service
@@ -98,10 +95,17 @@ public class ItemServiceImpl implements ItemService {
         return itemList.stream().map(item -> new ItemView(item, downloadUrl)).collect(Collectors.toList());
     }
 
+    @Override
+    public List<ItemView> getSellerItems() {
+        User currentUser = userRepository.findById(SecurityUtil.getCurrentUserId()).get();
+        List<Item> itemList = itemRepository.findAllByStatusAndUserIdOrderByUpdatedDateDesc(Item.Status.ACTIVE.value,currentUser);
+        return itemList.stream().map(item -> new ItemView(item, downloadUrl)).collect(Collectors.toList());
+    }
+
     public void downloadImageFile(String fileName, HttpServletResponse response) {
         try {
-            logger.info("fileName:----------"+fileName);
-            System.out.println("fileName:----------"+fileName);
+            logger.info("fileName:----------" + fileName);
+            System.out.println("fileName:----------" + fileName);
             response.setHeader("Content-Disposition",
                     "attachment; filename*=UTF-8''" + URLEncoder.encode(fileName, "UTF-8"));
             response.setHeader("Content-Type",
@@ -182,13 +186,13 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemView> getAll(String key, Integer categoryId, Boolean fresh) {
-        
+
         List<Item> itemList;
-        if(StringUtils.isEmpty(key)){
-            key="";
+        if (StringUtils.isEmpty(key)) {
+            key = "";
         }
-        itemList = itemRepository.getItemList(Item.Status.ACTIVE.value,key,categoryId,fresh);
-        
+        itemList = itemRepository.getItemList(Item.Status.ACTIVE.value, key, categoryId, fresh);
+
         return itemList.stream().map(item -> new ItemView(item, downloadUrl)).collect(Collectors.toList());
     }
 

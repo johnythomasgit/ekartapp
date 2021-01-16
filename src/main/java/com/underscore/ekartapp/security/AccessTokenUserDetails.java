@@ -5,23 +5,23 @@
  */
 package com.underscore.ekartapp.security;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
- *
  * @author nirmal
  */
 public class AccessTokenUserDetails implements UserDetails {
-    
+
 
     public int userId;
     private String userRole;
-    
+
 
     public AccessTokenUserDetails(int userId, short role) {
         this.userId = userId;

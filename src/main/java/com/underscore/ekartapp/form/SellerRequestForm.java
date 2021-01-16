@@ -5,11 +5,11 @@
  */
 package com.underscore.ekartapp.form;
 
-import javax.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
+
 /**
- *
  * @author johny
  */
 public class SellerRequestForm {
@@ -22,7 +22,7 @@ public class SellerRequestForm {
 
     @NotNull(message = "shopName.is.empty")
     private String shopName;
-    
+
     @NotNull(message = "area.is.empty")
     private Integer areaId;
 
@@ -35,7 +35,7 @@ public class SellerRequestForm {
     public void setAreaId(Integer areaId) {
         this.areaId = areaId;
     }
-    
+
     public Integer getId() {
         return id;
     }

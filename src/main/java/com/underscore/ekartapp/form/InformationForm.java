@@ -6,7 +6,6 @@
 package com.underscore.ekartapp.form;
 
 /**
- *
  * @author johny
  */
 public class InformationForm {
@@ -14,11 +13,11 @@ public class InformationForm {
     private String title;
 
     private String description;
-    
+
     private boolean mailNotification;
-    
+
     private boolean pushNotification;
-    
+
 
     public String getTitle() {
         return title;

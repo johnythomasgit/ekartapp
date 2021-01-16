@@ -5,7 +5,6 @@
  */
 package com.underscore.ekartapp.config;
 
-import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ParameterBuilder;
@@ -16,8 +15,9 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.Arrays;
+
 /**
- *
  * @author johny
  */
 @Configuration

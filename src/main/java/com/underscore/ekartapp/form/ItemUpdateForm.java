@@ -1,55 +1,54 @@
-
 package com.underscore.ekartapp.form;
 
-import java.math.BigDecimal;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.math.BigDecimal;
+
 /**
- *
  * @author johny
  */
 public class ItemUpdateForm {
-    
+
     @NotNull(message = "item.id.is.empty")
     private Integer id;
-    
+
     @NotNull(message = "item.name.is.empty")
     @Size(min = 1, max = 100, message = "item.name.is.not.valid")
     private String name;
-    
+
     @NotNull(message = "item.description.is.empty")
     @Size(min = 1, max = 1000, message = "item.description.is.not.valid")
     private String description;
-    
+
     @NotNull(message = "item.price.is.empty")
-    @Digits(integer=7,fraction = 2,message = "price.exceeds.size")
+    @Digits(integer = 7, fraction = 2, message = "price.exceeds.size")
     private BigDecimal price;
-    
+
     @NotNull(message = "item.quantity.is.empty")
-    @Digits(integer=7,fraction = 0,message = "item.quantity.exceeds.size")
+    @Digits(integer = 7, fraction = 0, message = "item.quantity.exceeds.size")
     private Integer quantity;
-    
+
     @NotNull(message = "item.category.id.is.empty")
     private Integer categoryId;
-    
+
     @Size(max = 45, message = "gender.exceeds.size")
     private String gender;
-    
+
     @Size(max = 45, message = "age.exceeds.size")
     private String age;
-    
+
     @Size(max = 45, message = "colour.exceeds.size")
     private String colour;
-    
+
     @Nullable
-    private MultipartFile  images[];
-    
+    private MultipartFile images[];
+
     @Nullable
-    private String  removeUrls[];
+    private String removeUrls[];
 
     public String getGender() {
         return gender;
@@ -74,7 +73,7 @@ public class ItemUpdateForm {
     public void setColour(String colour) {
         this.colour = colour;
     }
-    
+
     public Integer getCategoryId() {
         return categoryId;
     }
@@ -138,5 +137,5 @@ public class ItemUpdateForm {
     public void setRemoveUrls(String[] removeUrls) {
         this.removeUrls = removeUrls;
     }
-    
+
 }

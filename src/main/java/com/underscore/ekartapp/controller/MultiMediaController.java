@@ -6,27 +6,27 @@
 package com.underscore.ekartapp.controller;
 
 import com.underscore.ekartapp.service.ItemService;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
- *
  * @author johnythomas
  */
 @RestController
 @RequestMapping("/media")
 public class MultiMediaController {
-    
+
     @Autowired
     private ItemService itemService;
-    
+
     @GetMapping("/downloadFile/{fileName:.+}")
     public void downloadImageFile(@PathVariable String fileName, HttpServletResponse response) {
         itemService.downloadImageFile(fileName, response);
     }
-    
+
 }

@@ -7,19 +7,25 @@ package com.underscore.ekartapp.repository;
 
 import com.underscore.ekartapp.entity.Item;
 import com.underscore.ekartapp.entity.ItemImage;
-import java.util.List;
 import org.springframework.data.repository.Repository;
 
+import java.util.List;
+
 /**
- *
  * @author johnythomas
  */
-public interface ItemImageRepository extends Repository<ItemImage, Integer>{
+public interface ItemImageRepository extends Repository<ItemImage, Integer> {
     ItemImage findById(Integer itemId);
+
     ItemImage findByImagePath(String imagePath);
+
     ItemImage save(ItemImage itemImage);
+
     List<ItemImage> findByItemId(Item item);
+
     void deleteByItemId(Item item);
+
     void deleteById(Integer id);
+
     void deleteByImagePath(String imagePath);
 }
